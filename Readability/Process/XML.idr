@@ -36,7 +36,7 @@ processParas (Node p::ps) = do
 
 calcReadability : Document DOCUMENT
                 -> {[STATE RStats]} Eff $ List (RMetricTy, Float)
-calcReadability doc = case query "//*/text()" doc of
+calcReadability doc = case queryDoc "//*/text()" doc of
       Left err => pure Nil
       Right ps => do
         processParas ps
