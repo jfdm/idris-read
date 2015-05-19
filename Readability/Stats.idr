@@ -2,15 +2,15 @@ module Readability.Stats
 
 import Effects
 
-record RStats : Type where
-  MkRStats : (chars : Int)
-           -> (sylls : Int)
-           -> (words : Int)
-           -> (shortwords : Int)
-           -> (longwords : Int)
-           -> (bigwords : Int)
-           -> (sentances : Int)
-           -> RStats
+record RStats where
+  constructor MkRStats
+  chars : Int
+  sylls : Int
+  words : Int
+  shortwords : Int
+  longwords : Int
+  bigwords : Int
+  sentances : Int
 
 instance Default (RStats) where
     default = MkRStats 0 0 0 0 0 0 0
