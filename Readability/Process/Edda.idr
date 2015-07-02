@@ -4,6 +4,7 @@ import Effects
 import Effect.State
 
 import Edda
+import Edda.Query
 
 import Readability.WordTypes
 import Readability.Stats
