@@ -35,7 +35,7 @@ calcScores st = [
   where
     cs     = cast $ chars st
     sys    = cast $ sylls st
-    ws     = cast $ words st
+    ws     = cast $ nowords st
     sens   = cast $ sentances st
     bwords = cast $ bigwords st
 

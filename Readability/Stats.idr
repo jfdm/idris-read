@@ -6,7 +6,7 @@ record RStats where
   constructor MkRStats
   chars : Int
   sylls : Int
-  words : Int
+  nowords : Int
   shortwords : Int
   longwords : Int
   bigwords : Int
@@ -18,7 +18,7 @@ instance Default (RStats) where
 instance Show RStats where
   show st = "No. of chars: " ++ show (chars st) ++
        "\nNo. of syllables: " ++ show (sylls st) ++
-       "\nNo. of words: " ++ show (words st) ++
+       "\nNo. of words: " ++ show (nowords st) ++
        "\nNo. of short words: " ++ show (shortwords st) ++
        "\nNo. of long words: "  ++ show (longwords st) ++
        "\nNo. of big words: "   ++ show (bigwords st) ++
@@ -29,7 +29,7 @@ updateRStats : RStats -> Int -> Int -> Int -> Int -> Int  -> RStats
 updateRStats st cs ss sws lws bws = record {
              chars = (chars st) + cs,
              sylls = (sylls st) + ss,
-             words = (words st) + 1,
+             nowords = (nowords st) + 1,
              shortwords = (shortwords st) + sws,
              longwords  = (longwords st)  + lws,
              bigwords  = (bigwords st)    + bws

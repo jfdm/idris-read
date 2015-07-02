@@ -1,3 +1,9 @@
+-- ----------------------------------------------------------- [ WordTypes.idr ]
+-- Module    : WordTypes.idr
+-- Copyright : (c) Jan de Muijnck-Hughes
+-- License   : see LICENSE
+-- --------------------------------------------------------------------- [ EOH ]
+
 module Readability.WordTypes
 
 import Prelude.Strings

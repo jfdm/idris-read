@@ -1,20 +1,22 @@
-##  Makefile
+# ----------------------------------------------------------------- [ Makefile ]
+# Module    : Makefile
+# Copyright : (c) Jan de Muijnck-Hughes
+# License   : see LICENSE
+# ---------------------------------------------------------------------- [ EOH ]
 
 IDRIS := idris
 LIB   := read
-OPTS  :=
 
 .PHONY: doc clobber check clean lib install #test
 
 install: lib
-	${IDRIS} ${OPTS} --install ${LIB}.ipkg
+	${IDRIS} --install ${LIB}.ipkg
 
 lib:
-	${IDRIS} ${OPTS} --build ${LIB}.ipkg
+	${IDRIS} --build ${LIB}.ipkg
 
 clean:
 	${IDRIS} --clean ${LIB}.ipkg
-	${IDRIS} --clean ${BIN}.ipkg
 	find . -name "*~" -delete
 
 check: clobber
@@ -30,3 +32,5 @@ clobber : clean
 
 doc:
 	${IDRIS} --mkdoc ${LIB}.ipkg
+
+# ---------------------------------------------------------------------- [ EOF ]
