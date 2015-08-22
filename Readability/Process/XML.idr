@@ -18,7 +18,11 @@ import Readability.Stats
 import Readability.Metrics
 
 import Readability.Process.Effs
-import Readability.Process.Common
+import public Readability.Process.Common
+
+-- -------------------------------------------------------------- [ Directives ]
+
+%access private
 
 ||| Extract the sentences from a text node.
 getSentences : Document a -> List String
@@ -40,14 +44,20 @@ processParas (Node p::ps) = do
    processPara (getSentences p)
    processParas ps
 
-calcReadability : Document DOCUMENT
-                -> Eff (List (RMetricTy, Float)) ReadEffs
-calcReadability doc = case queryDoc "//*/text()" doc of
-      Left err => pure Nil
+
+public
+calcReadabilityE : Document DOCUMENT
+                -> Eff (Maybe ReadResult) ReadEffs
+calcReadabilityE doc =
+  case queryDoc "//*/text()" doc of
+      Left err => pure Nothing
       Right ps => do
         processParas ps
         res <- getReadState
-        pure $ calcScores res
+        pure $ Just (calcScores res)
 
+public
+calcReadability : Document DOCUMENT -> Maybe ReadResult
+calcReadability doc = runPure $ calcReadabilityE doc
 
 -- --------------------------------------------------------------------- [ EOF ]

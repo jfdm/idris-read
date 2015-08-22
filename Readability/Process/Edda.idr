@@ -16,7 +16,11 @@ import Readability.Stats
 import Readability.Metrics
 
 import Readability.Process.Effs
-import Readability.Process.Common
+import public Readability.Process.Common
+
+-- -------------------------------------------------------------- [ Directives ]
+
+%access private
 
 -- ----------------------------------------------------------------- [ Queries ]
 ||| Extract text from inlined elements.
@@ -60,12 +64,19 @@ processParas (p::ps) = do
   processPara (getSentances p)
   processParas ps
 
-calcReadability : Edda PRIME MODEL
-                -> Eff (List (RMetricTy, Float)) ReadEffs
-calcReadability doc = do
-    let ps = getParas doc
-    processParas ps
-    res <- getReadState
-    pure $ calcScores res
+public
+calcReadabilityE : Edda PRIME MODEL
+                -> Eff (Maybe ReadResult) ReadEffs
+calcReadabilityE doc = do
+    case getParas doc of
+      Nil => pure Nothing
+      ps  => do
+        processParas ps
+        res <- getReadState
+        pure $ Just (calcScores res)
+
+public
+calcReadability : Edda PRIME MODEL -> Maybe ReadResult
+calcReadability doc = runPure $ calcReadabilityE doc
 
 -- --------------------------------------------------------------------- [ EOF ]
