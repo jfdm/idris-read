@@ -117,4 +117,6 @@ toList (MkReadResult a b c d e f) =
     , (FOG,     e)
     , (SMOG,    f)]
 
+instance Show ReadResult where
+  show rslt = show (Metrics.toList rslt)
 -- --------------------------------------------------------------------- [ EOF ]
