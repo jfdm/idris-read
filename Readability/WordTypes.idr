@@ -3,7 +3,6 @@
 -- Copyright : (c) Jan de Muijnck-Hughes
 -- License   : see LICENSE
 -- --------------------------------------------------------------------- [ EOH ]
-
 module Readability.WordTypes
 
 import Prelude.Strings
@@ -113,23 +112,27 @@ isVowel c = List.elem (toLower c) ['a', 'e', 'i', 'o', 'u', 'y']
 
 public
 countSyllables : String -> Int
-countSyllables w = case length (ws) <= 2 of
-    True => 1
-    False => if isSuffixOf (unpack "ed") ws
-               then countSyllables' (take (length ws - 2) ws)
-               else let res = countSyllables' ws in
-                        if res == 0
-                          then 1
-                          else res
+countSyllables w =
+    case length (ws) <= 2 of
+      True  => 1
+      False =>
+        if isSuffixOf (unpack "ed") ws
+          then countSyllables' (take (length ws - 2) ws)
+          else
+            let res = countSyllables' ws in
+              if res == 0
+                then 1
+                else res
 
   where
     ws : List Char
     ws = unpack w
     countSyllables' : List Char -> Int
     countSyllables' []         = 0
-    countSyllables' (x::y::xs) = if (isVowel x) && not (isVowel y)
-                                  then 1 + countSyllables' xs
-                                  else countSyllables' (y::xs)
+    countSyllables' (x::y::xs) =
+      if (isVowel x) && not (isVowel y)
+        then 1 + countSyllables' xs
+        else countSyllables' (y::xs)
     countSyllables' x          = 0
 
 -- --------------------------------------------------------------------- [ EOF ]

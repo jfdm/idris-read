@@ -1,16 +1,21 @@
+-- --------------------------------------------------------------- [ Stats.idr ]
+-- Module    : Stats.idr
+-- Copyright : (c) Jan de Muijnck-Hughes
+-- License   : see LICENSE
+-- --------------------------------------------------------------------- [ EOH ]
 module Readability.Stats
 
 import Effects
 
 record RStats where
   constructor MkRStats
-  chars : Int
-  sylls : Int
-  nowords : Int
+  chars      : Int
+  sylls      : Int
+  nowords    : Int
   shortwords : Int
-  longwords : Int
-  bigwords : Int
-  sentances : Int
+  longwords  : Int
+  bigwords   : Int
+  sentances  : Int
 
 instance Default (RStats) where
     default = MkRStats 0 0 0 0 0 0 0
@@ -25,14 +30,14 @@ instance Show RStats where
        "\nNo. of sentances: "   ++ show (sentances st)
 
 
-updateRStats : RStats -> Int -> Int -> Int -> Int -> Int  -> RStats
-updateRStats st cs ss sws lws bws = record {
-             chars = (chars st) + cs,
-             sylls = (sylls st) + ss,
-             nowords = (nowords st) + 1,
-             shortwords = (shortwords st) + sws,
-             longwords  = (longwords st)  + lws,
-             bigwords  = (bigwords st)    + bws
-             } st
+updateRStats : Int -> Int -> Int -> Int -> Int -> RStats -> RStats
+updateRStats cs ss sws lws bws st =
+  record { chars      = (chars st)      + cs
+         , sylls      = (sylls st)      + ss
+         , nowords    = (nowords st)    + 1
+         , shortwords = (shortwords st) + sws
+         , longwords  = (longwords st)  + lws
+         , bigwords   = (bigwords st)   + bws
+    } st
 
 -- --------------------------------------------------------------------- [ EOF ]

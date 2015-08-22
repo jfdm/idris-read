@@ -1,3 +1,8 @@
+-- ----------------------------------------------------------------- [ XML.idr ]
+-- Module    : XML.idr
+-- Copyright : (c) Jan de Muijnck-Hughes
+-- License   : see LICENSE
+-- --------------------------------------------------------------------- [ EOH ]
 module Readability.Process.XML
 
 import Prelude.Strings
@@ -12,6 +17,7 @@ import Readability.WordTypes
 import Readability.Stats
 import Readability.Metrics
 
+import Readability.Process.Effs
 import Readability.Process.Common
 
 ||| Extract the sentences from a text node.
@@ -21,26 +27,26 @@ getSentences (Text t) = Strings.split (isEOS) t
     isEOS : Char -> Bool
     isEOS e = List.elem e ['.', ':', '!', '"', '\'']
 
-processPara : List String -> {[STATE RStats]} Eff ()
+processPara : List String -> Eff () ReadEffs
 processPara Nil     = pure ()
 processPara (s::ss) = do
   processSentence $ words s
-  update (\x => record {sentances = (sentances x) + 1} x)
+  updateReadState (\x => record {sentances = (sentances x) + 1} x)
   processPara ss
 
-processParas : List $ Document NODE -> {[STATE RStats]} Eff ()
+processParas : List $ Document NODE -> Eff () ReadEffs
 processParas Nil     = pure ()
 processParas (Node p::ps) = do
    processPara (getSentences p)
    processParas ps
 
 calcReadability : Document DOCUMENT
-                -> {[STATE RStats]} Eff $ List (RMetricTy, Float)
+                -> Eff (List (RMetricTy, Float)) ReadEffs
 calcReadability doc = case queryDoc "//*/text()" doc of
       Left err => pure Nil
       Right ps => do
         processParas ps
-        res <- get
+        res <- getReadState
         pure $ calcScores res
 
 

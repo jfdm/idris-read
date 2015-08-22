@@ -1,3 +1,8 @@
+-- ---------------------------------------------------------------- [ Edda.idr ]
+-- Module    : Edda.idr
+-- Copyright : (c) Jan de Muijnck-Hughes
+-- License   : see LICENSE
+-- --------------------------------------------------------------------- [ EOH ]
 module Readability.Process.Edda
 
 import Effects
@@ -10,6 +15,7 @@ import Readability.WordTypes
 import Readability.Stats
 import Readability.Metrics
 
+import Readability.Process.Effs
 import Readability.Process.Common
 
 -- ----------------------------------------------------------------- [ Queries ]
@@ -40,26 +46,26 @@ getSentances (Para txt) = doSplit txt
     doSplit xs = filter (\x => x /= Nil) (List.split (isEOS) xs)
 
 ||| Process a paragraph, which is a list of sentences.
-processPara : List (List (Edda PRIME INLINE)) -> {[STATE RStats]} Eff ()
+processPara : List (List (Edda PRIME INLINE)) -> Eff () ReadEffs
 processPara Nil     = pure ()
 processPara (s::ss) = do
   processSentence (query extractText s)
-  update (\x => record {sentances = (sentances x) + 1} x)
+  updateReadState (\x => record {sentances = (sentances x) + 1} x)
   processPara ss
 
 ||| Process paragraphs.
-processParas : List (Edda PRIME BLOCK) -> {[STATE RStats]} Eff ()
+processParas : List (Edda PRIME BLOCK) -> Eff () ReadEffs
 processParas Nil      = pure ()
 processParas (p::ps) = do
   processPara (getSentances p)
   processParas ps
 
 calcReadability : Edda PRIME MODEL
-                -> {[STATE RStats]} Eff $ List (RMetricTy, Float)
+                -> Eff (List (RMetricTy, Float)) ReadEffs
 calcReadability doc = do
     let ps = getParas doc
     processParas ps
-    res <- get
+    res <- getReadState
     pure $ calcScores res
 
 -- --------------------------------------------------------------------- [ EOF ]

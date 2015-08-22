@@ -1,3 +1,8 @@
+-- ------------------------------------------------------------- [ Metrics.idr ]
+-- Module    : Metrics.idr
+-- Copyright : (c) Jan de Muijnck-Hughes
+-- License   : see LICENSE
+-- --------------------------------------------------------------------- [ EOH ]
 ||| Readability Metrics
 |||
 ||| http://www.editcentral.com/gwt1/EditCentral.html

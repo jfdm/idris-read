@@ -2,10 +2,12 @@ package read
 
 opts = "-p effects -p edda -p xml"
 
-modules = Readability
-        , Readability.Metrics
+modules = Readability.Metrics
         , Readability.Stats
         , Readability.WordTypes
+        , Readability
+
+        , Readability.Process.Effs
         , Readability.Process.Common
         , Readability.Process.Edda
         , Readability.Process.XML
