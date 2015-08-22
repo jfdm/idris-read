@@ -97,4 +97,24 @@ instance Eq RMetricTy where
   (==) FOG     FOG     = True
   (==) SMOG    SMOG    = True
   (==) _        _      = False
+
+
+record ReadResult where
+  constructor MkReadResult
+  flesch  : Float
+  ari     : Float
+  kincaid : Float
+  coleman : Float
+  fog     : Float
+  smog    : Float
+
+toList : ReadResult -> List (RMetricTy, Float)
+toList (MkReadResult a b c d e f) =
+    [ (FLESCH,  a)
+    , (ARI,     b)
+    , (KINCAID, c)
+    , (COLEMAN, d)
+    , (FOG,     e)
+    , (SMOG,    f)]
+
 -- --------------------------------------------------------------------- [ EOF ]

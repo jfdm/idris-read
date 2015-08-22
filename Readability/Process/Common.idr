@@ -26,25 +26,6 @@ processSentence (x::xs) = do
    updateReadState (\st => updateRStats lenstr syls sws lws bws st)
    processSentence xs
 
-record ReadResult where
-  constructor MkReadResult
-  flesch  : Float
-  ari     : Float
-  kincaid : Float
-  coleman : Float
-  fog     : Float
-  smog    : Float
-
-toList : ReadResult -> List (RMetricTy, Float)
-toList (MkReadResult a b c d e f) =
-    [ (FLESCH,  a)
-    , (ARI,     b)
-    , (KINCAID, c)
-    , (COLEMAN, d)
-    , (FOG,     e)
-    , (SMOG,    f)]
-
-
 ||| Calculate the readability scores using different metrics.
 calcScores : RStats -> ReadResult
 calcScores st =
