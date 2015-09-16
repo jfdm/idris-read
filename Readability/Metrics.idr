@@ -8,8 +8,6 @@
 ||| http://www.editcentral.com/gwt1/EditCentral.html
 module Readability.Metrics
 
-import Data.Floats
-
 data RMetricTy = FLESCH | ARI | KINCAID | COLEMAN | FOG | SMOG
 
 ||| Flesch reading ease score
@@ -20,7 +18,7 @@ data RMetricTy = FLESCH | ARI | KINCAID | COLEMAN | FOG | SMOG
 ||| @wcount Number of words
 ||| @scount Number of sentences.
 ||| @sycount Number of syllables.
-flesch : (wcount : Float) -> (scount : Float) -> (sycount : Float) -> Float
+flesch : (wcount : Double) -> (scount : Double) -> (sycount : Double) -> Double
 flesch ws ss sys = 206.835 - (1.015 * ws) / ss - (84.6 * sys) / ws
 
 ||| Automated readability index
@@ -31,7 +29,7 @@ flesch ws ss sys = 206.835 - (1.015 * ws) / ss - (84.6 * sys) / ws
 ||| @ccount Number of Characters
 ||| @wcount Number of words.
 ||| @scount Number of sentences.
-ari : (ccount : Float) -> (wcount : Float) -> (scount : Float) -> Float
+ari : (ccount : Double) -> (wcount : Double) -> (scount : Double) -> Double
 ari as ws ss = (4.71 * as) / ws + (0.5 * ws) / ss - 21.43
 
 
@@ -43,7 +41,7 @@ ari as ws ss = (4.71 * as) / ws + (0.5 * ws) / ss - 21.43
 ||| @wcount The number of words
 ||| @scount Number of sentences
 ||| @sycount Number of syllables.
-kincaid : (wcount : Float) -> (scount : Float) -> (sycount : Float) -> Float
+kincaid : (wcount : Double) -> (scount : Double) -> (sycount : Double) -> Double
 kincaid ws ss sys = (0.39 * ws) / ss + (11.8 * sys) / ws - 15.59
 
 
@@ -55,7 +53,7 @@ kincaid ws ss sys = (0.39 * ws) / ss + (11.8 * sys) / ws - 15.59
 ||| @ccount Number of letters and digits.
 ||| @wcount The number of words.
 ||| @scount The number of sentences.
-coleman : (ccount : Float) -> (wcount : Float) -> (scount : Float) -> Float
+coleman : (ccount : Double) -> (wcount : Double) -> (scount : Double) -> Double
 coleman as ws ss = (5.89 * as) / ws - (30.0 * ss) / ws - 15.8
 
 
@@ -67,7 +65,7 @@ coleman as ws ss = (5.89 * as) / ws - (30.0 * ss) / ws - 15.8
 ||| @wcount Number of Words
 ||| @scount Number of sentences
 ||| @bwcount Number of words with three plus syllables.
-fog : (wcount : Float) -> (scount : Float) -> (bwcount : Float) -> Float
+fog : (wcount : Double) -> (scount : Double) -> (bwcount : Double) -> Double
 fog ws ss bs = 0.4 * ( ws / ss + (100.0 * bs) / ws)
 
 ||| SMOG index
@@ -77,7 +75,7 @@ fog ws ss bs = 0.4 * ( ws / ss + (100.0 * bs) / ws)
 ||| ```
 ||| @bwcount The number of word with three plus syllables.
 ||| @scount The number of sentences.
-smog : (bwcount : Float) -> (scount : Float) -> Float
+smog : (bwcount : Double) -> (scount : Double) -> Double
 smog bs ss = 3.0 + sqrt (bs * (30 / ss))
 
 
@@ -101,14 +99,14 @@ instance Eq RMetricTy where
 
 record ReadResult where
   constructor MkReadResult
-  flesch  : Float
-  ari     : Float
-  kincaid : Float
-  coleman : Float
-  fog     : Float
-  smog    : Float
+  flesch  : Double
+  ari     : Double
+  kincaid : Double
+  coleman : Double
+  fog     : Double
+  smog    : Double
 
-toList : ReadResult -> List (RMetricTy, Float)
+toList : ReadResult -> List (RMetricTy, Double)
 toList (MkReadResult a b c d e f) =
     [ (FLESCH,  a)
     , (ARI,     b)
