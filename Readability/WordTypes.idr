@@ -117,7 +117,7 @@ countSyllables w =
       True  => 1
       False =>
         if isSuffixOf (unpack "ed") ws
-          then countSyllables' (take (length ws - 2) ws)
+          then countSyllables' (take (minus (length ws)  2) ws)
           else
             let res = countSyllables' ws in
               if res == 0
