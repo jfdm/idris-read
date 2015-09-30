@@ -49,7 +49,7 @@ public
 calcReadabilityE : Document DOCUMENT
                 -> Eff (Maybe ReadResult) ReadEffs
 calcReadabilityE doc =
-  case queryDoc "//*/text()" doc of
+  case query "//*/text()" doc of
       Left err => pure Nothing
       Right ps => do
         processParas ps
