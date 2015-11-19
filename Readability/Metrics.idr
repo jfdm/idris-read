@@ -96,6 +96,17 @@ instance Eq RMetricTy where
   (==) SMOG    SMOG    = True
   (==) _        _      = False
 
+readRMetricTy : String -> Maybe RMetricTy
+readRMetricTy s =
+  case toLower s of
+    "flesch"  => Just FLESCH
+    "ari"     => Just ARI
+    "kincaid" => Just KINCAID
+    "coleman" => Just COLEMAN
+    "fog"     => Just FOG
+    "smog"    => Just SMOG
+    otherwise  => Nothing
+
 
 record ReadResult where
   constructor MkReadResult
