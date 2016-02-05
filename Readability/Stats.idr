@@ -7,6 +7,9 @@ module Readability.Stats
 
 import Effects
 
+%access export
+
+public export
 record RStats where
   constructor MkRStats
   chars      : Int
@@ -17,10 +20,10 @@ record RStats where
   bigwords   : Int
   sentances  : Int
 
-instance Default (RStats) where
+Default (RStats) where
     default = MkRStats 0 0 0 0 0 0 0
 
-instance Show RStats where
+Show RStats where
   show st = "No. of chars: " ++ show (chars st) ++
        "\nNo. of syllables: " ++ show (sylls st) ++
        "\nNo. of words: " ++ show (nowords st) ++

@@ -8,6 +8,9 @@
 ||| http://www.editcentral.com/gwt1/EditCentral.html
 module Readability.Metrics
 
+%access export
+
+public export
 data RMetricTy = FLESCH | ARI | KINCAID | COLEMAN | FOG | SMOG
 
 ||| Flesch reading ease score
@@ -79,7 +82,7 @@ smog : (bwcount : Double) -> (scount : Double) -> Double
 smog bs ss = 3.0 + sqrt (bs * (30 / ss))
 
 
-instance Show RMetricTy where
+Show RMetricTy where
   show FLESCH  = "FLESCH"
   show ARI     = "ARI"
   show KINCAID = "KINCAID"
@@ -87,7 +90,7 @@ instance Show RMetricTy where
   show FOG     = "FOG"
   show SMOG    = "SMOG"
 
-instance Eq RMetricTy where
+Eq RMetricTy where
   (==) FLESCH  FLESCH  = True
   (==) ARI     ARI     = True
   (==) KINCAID KINCAID = True
@@ -107,7 +110,7 @@ readRMetricTy s =
     "smog"    => Just SMOG
     otherwise  => Nothing
 
-
+public export
 record ReadResult where
   constructor MkReadResult
   flesch  : Double
@@ -126,6 +129,6 @@ toList (MkReadResult a b c d e f) =
     , (FOG,     e)
     , (SMOG,    f)]
 
-instance Show ReadResult where
+Show ReadResult where
   show rslt = show (Metrics.toList rslt)
 -- --------------------------------------------------------------------- [ EOF ]

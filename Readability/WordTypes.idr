@@ -7,8 +7,6 @@ module Readability.WordTypes
 
 import Prelude.Strings
 
-%access private
-
 inTwos : List a -> List (a,a)
 inTwos [] = []
 inTwos (x::y::xs) = (x,y) :: inTwos xs
@@ -19,7 +17,6 @@ isSomething w ws = List.elem w ws
 articles : List String
 articles = ["the", "a", "an"]
 
-public
 isArticle : String -> Bool
 isArticle w = isSomething w articles
 
@@ -31,28 +28,25 @@ pronouns = ["i", "me", "we", "us", "you", "he", "him", "she", "her", "it", "they
     "oneself", "my", "mine", "his", "hers", "yours", "ours", "theirs", "its",
     "our", "that", "their", "these", "this", "those", "your"]
 
-public
+export
 isPronoun : String -> Bool
 isPronoun w = isSomething w pronouns
 
 iter_pronouns : List String
 iter_pronouns = ["why", "who", "what", "whom", "when", "where", "how"]
 
-public
 isInterrogativePronoun : String -> Bool
 isInterrogativePronoun w = isSomething w iter_pronouns
 
 conjunctions : List String
 conjunctions = ["and", "but", "or", "yet", "nor"]
 
-public
 isConjunction : String -> Bool
 isConjunction w = isSomething w conjunctions
 
 nominalisation : List String
 nominalisation = ["tion", "ment", "ence", "ance"]
 
-public
 isNominalisation : String -> Bool
 isNominalisation w = elem True (map (\x => isSuffixOf (unpack x) (unpack w)) nominalisation)
 
@@ -63,7 +57,6 @@ subconjunction =  ["after", "because", "lest", "till", "'til", "although", "befo
     "whenever", "as much as", "if", "than", "as soon as", "inasmuch",
     "in order that", "though", "while"]
 
-public
 isSubconjunction : String -> Bool
 isSubconjunction w = isSomething w subconjunction
 
@@ -86,7 +79,6 @@ preposition = ["aboard", "about", "above", "according to", "across from",
     "up to", "upon", "with", "within", "without", "across", "along",
     "by", "of", "in", "to", "near", "of", "from"]
 
-public
 isPreposition : String -> Bool
 isPreposition w = isSomething w preposition
 
@@ -94,23 +86,20 @@ auxverbs : List String
 auxverbs = ["will", "shall", "cannot", "may", "need to", "would", "should",
     "could", "might", "must", "ought", "ought to", "can't", "can"]
 
-public
 isAuxVerb : String -> Bool
 isAuxVerb w = isSomething w auxverbs
 
 toBeVerbs : List String
 toBeVerbs = ["be", "being", "was", "were", "been", "are", "is"]
 
-public
 isToBeVerb : String -> Bool
 isToBeVerb w = isSomething w toBeVerbs
 
 
-public
 isVowel : Char -> Bool
 isVowel c = List.elem (toLower c) ['a', 'e', 'i', 'o', 'u', 'y']
 
-public
+export
 countSyllables : String -> Int
 countSyllables w =
     case length (ws) <= 2 of

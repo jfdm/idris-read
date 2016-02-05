@@ -10,6 +10,9 @@ import Effect.State
 
 import Readability.Stats
 
+%access export
+
+public export
 ReadEffs : List EFFECT
 ReadEffs = ['readST ::: STATE RStats]
 

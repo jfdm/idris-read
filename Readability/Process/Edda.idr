@@ -18,10 +18,6 @@ import Readability.Metrics
 import Readability.Process.Effs
 import public Readability.Process.Common
 
--- -------------------------------------------------------------- [ Directives ]
-
-%access private
-
 -- ----------------------------------------------------------------- [ Queries ]
 ||| Extract text from inlined elements.
 extractText : Edda PRIME INLINE -> List String
@@ -64,7 +60,7 @@ processParas (p::ps) = do
   processPara (getSentances p)
   processParas ps
 
-public
+export
 calcReadabilityE : Edda PRIME MODEL
                 -> Eff (Maybe ReadResult) ReadEffs
 calcReadabilityE doc = do
@@ -75,7 +71,7 @@ calcReadabilityE doc = do
         res <- getReadState
         pure $ Just (calcScores res)
 
-public
+export
 calcReadability : Edda PRIME MODEL -> Maybe ReadResult
 calcReadability doc = runPure $ calcReadabilityE doc
 

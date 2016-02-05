@@ -14,6 +14,8 @@ import Readability.Metrics
 
 import Readability.Process.Effs
 
+%access export
+
 ||| Process a sentence.
 processSentence : List String -> Eff () ReadEffs
 processSentence Nil     = pure ()
