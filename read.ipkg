@@ -1,6 +1,8 @@
 package read
 
-opts = "-p effects -p edda -p xml"
+pkgs = effects
+     , edda
+     , xml
 
 modules = Readability.Metrics
         , Readability.Stats
